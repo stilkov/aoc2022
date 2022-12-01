@@ -3,14 +3,12 @@
 
 (require '[clojure.string :as str])
 
-
+(defn sum-up [elf] (reduce + (map #(Integer/parseInt %) (str/split elf #"\n"))))
 (defn day-1-1 [] 
-  (let [sum-up (fn [elf] (reduce + (map #(Integer/parseInt %) (str/split elf #"\n"))))]
-    (reduce max (map sum-up (str/split (slurp (java.io.FileReader. "./input/day1.txt")) #"\n\n")))))
+  (reduce max (map sum-up (str/split (slurp (java.io.FileReader. "./input/day1.txt")) #"\n\n"))))
 
 (defn day-1-2 [] 
-  (let [sum-up (fn [elf] (reduce + (map #(Integer/parseInt %) (str/split elf #"\n"))))]
-    (reduce + (take 3 (sort > (map sum-up (str/split (slurp (java.io.FileReader. "./input/day1.txt")) #"\n\n")))))))
+  (reduce + (take 3 (sort > (map sum-up (str/split (slurp (java.io.FileReader. "./input/day1.txt")) #"\n\n"))))))
 
 (defn -main
   [] 
