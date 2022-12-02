@@ -2,11 +2,16 @@
 
 (require '[clojure.string :as str])
 
-(defn sum-up [elf] (reduce + (map #(Integer/parseInt %) (str/split elf #"\n"))))
+(defn split-elves [s]
+  (str/split s #"\n\n"))
+
+(defn sum-up [elf] (reduce + (map parse-long (str/split-lines elf))))
+
+(def elves-calories (map sum-up (split-elves (slurp "./input/day1.txt"))))
 
 (defn part1 [] 
-  (reduce max (map sum-up (str/split (slurp "./input/day1.txt") #"\n\n"))))
+  (reduce max elves-calories))
 
 (defn part2 [] 
-  (reduce + (take 3 (sort > (map sum-up (str/split (slurp "./input/day1.txt") #"\n\n"))))))
+  (reduce + (take 3 (sort > elves-calories))))
 
