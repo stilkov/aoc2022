@@ -23,7 +23,7 @@
   (reduce + (map priority lines)))
 
 (defn common-elements-in-list [l]
-  (reduce common-elements (first l) (rest l)))
+  (reduce common-elements l))
 
 (defn part2 []
   (reduce + (map priority-for-char
