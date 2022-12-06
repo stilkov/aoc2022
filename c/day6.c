@@ -17,9 +17,8 @@ int duplicates(char * p) {
 
 int first_marker_pos(const char * s, int count) {
   char chunk[count];
-  chunk[count-1] = '\0';
   int length = strlen(s);
-  for (int i = 0; i <= length-count; i++) {
+  for (int i = 0; i <= length - count; i++) {
     strncpy(chunk, &s[i], count);
     if (!duplicates(chunk))
       return i + count;
@@ -29,7 +28,7 @@ int first_marker_pos(const char * s, int count) {
 
 int main(int argc, char* argv[]) {
   FILE* f = fopen("../input/day6.txt", "r");
-  if (f != NULL) {
+  if (f) {
     fseek(f, 0, SEEK_END);
     int length = ftell(f);
     fseek(f, 0, SEEK_SET);
