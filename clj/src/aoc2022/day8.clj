@@ -47,3 +47,25 @@
   (let [lines (line-seq (io/reader "../input/day8.txt"))
         matrix (apply vector (map parse-line lines))]
     (visible-trees matrix)))
+
+(defn scenic-score-elem-dir [tree trees]
+  (min (count trees) (inc (count (take-while identity (map #(< % tree) trees))))))
+
+
+(defn scenic-score-elem [m x y]
+  (let [e (element-at m x y)]
+    (* (scenic-score-elem-dir e (right m x y))
+       (scenic-score-elem-dir e (reverse (left m x y)))
+       (scenic-score-elem-dir e (reverse (top m x y)))
+       (scenic-score-elem-dir e (bottom m x y)))))
+
+(defn max-scenic-score [m]
+  (apply max (for [x (range 1 (width m))
+                   y (range 1 (height m))]
+               (scenic-score-elem m x y))))
+
+(defn part2 []
+  (let [lines (line-seq (io/reader "../input/day8.txt"))
+        matrix (apply vector (map parse-line lines))]
+    (max-scenic-score matrix)))
+
