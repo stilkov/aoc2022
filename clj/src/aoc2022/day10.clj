@@ -30,8 +30,7 @@
   (if (close (mod cycle 40) (nth values cycle)) "#" "."))
 
 (defn pixels [lines]
-  (let [values (reverse (reduce process-line '(1) lines))
-        positions '(20 60 100 140 180 220)]
+  (let [values (reverse (reduce process-line '(1) lines))]
     (str/join "\n" (map #(apply str %)
                         (partition 40 (map #(visible values %) (range 241)))))))
 
