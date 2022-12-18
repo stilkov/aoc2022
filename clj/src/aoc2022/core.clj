@@ -5,7 +5,8 @@
          '[aoc2022.day2 :as day2]
          '[aoc2022.day3 :as day3]
          '[aoc2022.day8 :as day8]
-         '[aoc2022.day9 :as day9])
+         '[aoc2022.day9 :as day9]
+         '[aoc2022.day10 :as day10])
 
 
 (defn -main
@@ -20,4 +21,6 @@
   (println "Day 8 (1st half)" (day8/part1))
   (println "Day 8 (1st half)" (day8/part2))
   (println "Day 9 (1st half)" (day9/part1))
+  (println "Day 10 (1st half)" (day10/part1))
+  (println "Day 10 (2nd half)\n" (day10/part2))
 )

@@ -13,7 +13,7 @@
         
 
 (defn part1 []
-  (reduce + (map score (line-seq (io/reader "./input/day2.txt")))))
+  (reduce + (map score (line-seq (io/reader "../input/day2.txt")))))
 
 
 (def win-map {"A" { "X"  "Z", "Y"  "X", "Z"  "Y" },
@@ -27,6 +27,6 @@
         
 
 (defn part2 []
-  (reduce + (map score-by-win (line-seq (io/reader "./input/day2.txt")))))
+  (reduce + (map score-by-win (line-seq (io/reader "../input/day2.txt")))))
 
 

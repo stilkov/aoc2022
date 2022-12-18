@@ -17,7 +17,7 @@
   (let [[a b] (compartments s)]
     (reduce + (map priority-for-char (common-elements a b)))))
 
-(def lines (line-seq (io/reader "./input/day3.txt")))
+(def lines (line-seq (io/reader "../input/day3.txt")))
 
 (defn part1 []
   (reduce + (map priority lines)))

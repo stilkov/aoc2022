@@ -27,31 +27,45 @@
           (assoc :t-pos-y ty))
       bridge)))
              
-(defn move [bridge dir]
+(defn move [bridge dir follow-fn]
   (let [{:keys [h-pos-x h-pos-y]} bridge]
-    (follow-tail-if-needed (case dir
+    (follow-fn (case dir
                              "R" (update bridge :h-pos-x inc)
                              "L" (update bridge :h-pos-x dec)
                              "U" (update bridge :h-pos-y inc)
                              "D" (update bridge :h-pos-y dec)))))
 
   
-(defn move-n [bridge dir count]
-  (let [moved (move bridge dir)]
+(defn move-n [bridge dir count follow-fn]
+  (let [moved (move bridge dir follow-fn)]
     (if (= count 1)
       moved
-      (move-n moved dir (dec count)))))
+      (move-n moved dir (dec count) follow-fn))))
 
-(defn process-line [bridge line]
-  (let [[dir cnt] (str/split line #" ")] (move-n bridge dir (parse-long cnt))))
+(defn process-line [bridge line follow-fn]
+  (let [[dir cnt] (str/split line #" ")] (move-n bridge dir (parse-long cnt) follow-fn)))
 
 
-(defn process-lines [lines]
+(defn process-lines [lines follow-fn]
   (let [bridge {:h-pos-x 0, :h-pos-y 0, :t-pos-x 0, :t-pos-y 0, :tail-history #{}}
-        {:keys [t-pos-x t-pos-y tail-history]} (reduce process-line bridge lines)]
+        {:keys [t-pos-x t-pos-y tail-history]} (reduce #(process-line %1 %2 follow-fn) bridge lines)]
     (count (conj tail-history [t-pos-x t-pos-y]))))
 
 (defn part1 []
   (let [lines (line-seq (io/reader "../input/day9.txt"))]
-    (process-lines lines)))
+    (process-lines lines follow-tail-if-needed)))
+
+(defn follow-tail-if-needed-10 [bridge]
+  (let [{:keys [h-pos-x h-pos-y t-pos-x t-pos-y tail-history]} bridge]
+    (if-let [[tx ty] (adjustment h-pos-x h-pos-y t-pos-x t-pos-y)]
+      (-> bridge
+          (update :tail-history #(conj % [t-pos-x t-pos-y]))
+          (assoc :t-pos-x tx)
+          (assoc :t-pos-y ty))
+      bridge)))
+             
+
+(defn part2 []
+  (let [lines (line-seq (io/reader "../input/day9.txt"))]
+    (process-lines lines follow-tail-if-needed-10)))
 
