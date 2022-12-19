@@ -22,23 +22,18 @@
     (if (empty? items)
       monkeys
       (let [item (first items)]
- ;;      (println "item-move for item" item)
         (let [new-worry-level ((:op-fn monkey) item)
-              bored-level (quot new-worry-level 3)]
-          (let [destination (if (= (mod bored-level (:divisor monkey)) 0)
-                              (:true-monkey monkey)
-                              (:false-monkey monkey))
-                monkeys (-> monkeys
-                            (assoc-in [index :items] (apply vector (rest items)))
-                            (update-in [index :inspections] inc)
-                            (update-in [destination :items] #(conj % bored-level)))]
-            ;; (println "Throwing" bored-level "to monkey" destination)
-            ;; (println "items at Monkey" index ":" (get-in monkeys [index :items]))
-            ;; (println "items at Monkey" destination ":" (get-in monkeys [destination :items]))
-            (item-move monkeys index)))))))
+              bored-level (quot new-worry-level 3)
+              destination (if (= (mod bored-level (:divisor monkey)) 0)
+                            (:true-monkey monkey)
+                            (:false-monkey monkey))
+              monkeys (-> monkeys
+                          (assoc-in [index :items] (apply vector (rest items)))
+                          (update-in [index :inspections] inc)
+                          (update-in [destination :items] #(conj % bored-level)))]
+            (item-move monkeys index))))))
      
 (defn monkey-move [monkeys index]
-;;  (println "Move for monkey" index)
     (item-move monkeys index))
   
 (defn play-rounds [monkeys n]
